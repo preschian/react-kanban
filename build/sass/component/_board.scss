@@ -1,0 +1,47 @@
+.board {
+    @include wrap;
+    @include wrap('gutter', 32);
+
+    .board-column {
+        @include col;
+        @include col(1, 4);
+    }
+}
+
+.board-content {
+    @include box-shadow;
+    background-color: $grey;
+    border-radius: 2px;
+    padding-bottom: 16px;
+}
+
+.board-header {
+    background-color: white;
+    border-top: 1px solid $base;
+    border-bottom: 1px solid $base;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    padding: 16px;
+}
+
+.board-card {
+    @include box-shadow-light;
+    @include transition-duration(0.2s);
+    background-color: white;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 16px;
+    padding: 16px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &:hover {
+        @include box-shadow;
+    }
+
+    .board-card-title {
+        white-space: normal;
+    }
+}

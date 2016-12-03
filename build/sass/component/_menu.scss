@@ -1,0 +1,15 @@
+.menu {
+    @include box-shadow;
+    background-color: white;
+    padding: 16px 32px;
+
+    .menu-title {
+        color: $primary;
+        display: inline-block;
+        margin: 0;
+    }
+
+    .menu-btn {
+        float: right;
+    }
+}
