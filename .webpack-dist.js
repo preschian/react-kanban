@@ -9,7 +9,7 @@ var config = {
   entry: BUILD_DIR + '/script.jsx',
   output: {
     path: DIST_DIR,
-    filename: 'script.jsx'
+    filename: 'script.js'
   },
   plugins: [
     new webpack.DefinePlugin({
