@@ -24,6 +24,7 @@
     "cssnano": "^3.7.7",
     "eslint": "^3.4.0",
     "eslint-plugin-react": "^6.1.2",
+    "firebase": "^3.6.2",
     "flexiblegs-scss": "^5.5.3",
     "gulp": "^3.9.1",
     "gulp-file-include": "^1.0.0",

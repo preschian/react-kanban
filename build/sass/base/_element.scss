@@ -1,3 +1,10 @@
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+    outline: none;
+}
+
 a {
     display: inline-block;
     color: inherit;
@@ -8,6 +15,10 @@ body {
     background-color: $base;
     color: $primary;
     font-family: 'Roboto', sans-serif;
+}
+
+html {
+    box-sizing: border-box;
 }
 
 p {

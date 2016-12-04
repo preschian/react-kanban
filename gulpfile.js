@@ -25,8 +25,8 @@ var PATH = {
     OUTPUT: path.join(DIST, 'assets/css')
   },
   JSX: {
-    BUILD: path.join(BUILD, 'jsx/script.js'),
-    WATCH: path.join(BUILD, 'jsx/**/*.js'),
+    BUILD: path.join(BUILD, 'jsx/script.jsx'),
+    WATCH: path.join(BUILD, 'jsx/**/*.jsx'),
     OUTPUT: path.join(DIST, 'assets/js')
   }
 }

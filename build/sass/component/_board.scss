@@ -1,47 +1,72 @@
 .board {
-    @include wrap;
-    @include wrap('gutter', 32);
+  @include wrap;
+  @include wrap('gutter', 32);
 
-    .board-column {
-        @include col;
-        @include col(1, 4);
+  .board-column {
+  @include col;
+  @include col(1, 4);
+
+    &.board-column-add {
+        @include col(1, 5);
     }
+  }
 }
 
 .board-content {
-    @include box-shadow;
-    background-color: $grey;
-    border-radius: 2px;
-    padding-bottom: 16px;
+  @include box-shadow;
+  background-color: $grey;
+  border-radius: 2px;
+  border-top: 4px solid $primary;
+  padding-bottom: 16px;
 }
 
 .board-header {
-    background-color: white;
-    border-top: 1px solid $base;
-    border-bottom: 1px solid $base;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    padding: 16px;
+  background-color: white;
+  border-top: 1px solid $base;
+  border-bottom: 1px solid $base;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  padding: 16px;
+
+  .board-header-title {
+    font-weight: bold;
+  }
 }
 
 .board-card {
-    @include box-shadow-light;
-    @include transition-duration(0.2s);
+  @include box-shadow-light;
+  @include transition-duration(0.2s);
+  background-color: white;
+  border-radius: 2px;
+  cursor: pointer;
+  margin: 16px;
+  padding: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    @include box-shadow;
+  }
+
+  .board-card-title {
+    white-space: normal;
+  }
+}
+
+.board-add .board-add-input {
+  @include transition-duration(0.2s);
+  background-color: $base;
+  border: none;
+  border-radius: 2px;
+  display: block;
+  padding: 8px;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    @include box-shadow;
     background-color: white;
-    border-radius: 2px;
-    cursor: pointer;
-    margin: 16px;
-    padding: 16px;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-
-    &:hover {
-        @include box-shadow;
-    }
-
-    .board-card-title {
-        white-space: normal;
-    }
+  }
 }

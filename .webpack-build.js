@@ -6,6 +6,9 @@ var config = {
   output: {
     filename: 'script.js'
   },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   module: {
     loaders: [{
       test: /\.jsx?/,

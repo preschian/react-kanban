@@ -23,6 +23,9 @@ var config = {
       }
     })
   ],
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   module: {
     loaders: [{
       test: /\.jsx?/,
