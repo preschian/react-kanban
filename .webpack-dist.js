@@ -6,10 +6,10 @@ var DIST_DIR = path.join(__dirname, 'dist/assets/js')
 
 var config = {
   devtool: 'cheap-module-source-map',
-  entry: BUILD_DIR + '/script.js',
+  entry: BUILD_DIR + '/script.jsx',
   output: {
     path: DIST_DIR,
-    filename: 'script.js'
+    filename: 'script.jsx'
   },
   plugins: [
     new webpack.DefinePlugin({
