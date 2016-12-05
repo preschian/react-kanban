@@ -1,4 +1,4 @@
-.board {
+.board-wrap {
   @include wrap;
   @include wrap('gutter', 32);
 
@@ -64,7 +64,6 @@
   padding: 8px;
   width: 100%;
 
-  &:hover,
   &:focus {
     @include box-shadow;
     background-color: white;

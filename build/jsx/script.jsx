@@ -6,14 +6,14 @@ import Board from './component/board'
 import Menu from './component/menu'
 
 export class Container extends React.Component {
-  render() {
-    return <div>
+  render = () => (
+    <div>
       <Menu />
       <div className="container">
         <Board />
       </div>
     </div>
-  }
+  )
 }
 
 ReactDOM.render(
