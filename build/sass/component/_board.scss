@@ -1,14 +1,24 @@
-.board-wrap {
+.board {
   @include wrap;
   @include wrap('gutter', 32);
+  @include wrap('auto');
 
-  .board-column {
-  @include col;
-  @include col(1, 4);
+  .board-wrap {
+    @include col;
 
-    &.board-column-add {
-        @include col(1, 5);
+    .board-column {
+      display: inline-block;
+      vertical-align: top;
+      width: 300px;
+
+      &:not(:first-child) {
+        margin-left: 32px;
+      }
     }
+  }
+
+  .board-add {
+    @include col;
   }
 }
 
@@ -18,6 +28,25 @@
   border-radius: 2px;
   border-top: 4px solid $primary;
   padding-bottom: 16px;
+
+  .board-content-input {
+    padding-top: 16px;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .board-content-task {
+    background-color: $grey;
+    border: none;
+    border-radius: 2px;
+    padding: 8px 16px;
+    width: 100%;
+
+    &:focus {
+      @include box-shadow-light;
+      background-color: white;
+    }
+  }
 }
 
 .board-header {
@@ -39,8 +68,8 @@
   background-color: white;
   border-radius: 2px;
   cursor: pointer;
-  margin: 16px;
-  padding: 16px;
+  margin: 16px 16px 0 16px;
+  padding: 8px 16px;
 
   &:last-child {
     margin-bottom: 0;
@@ -52,6 +81,7 @@
 
   .board-card-title {
     white-space: normal;
+    word-wrap: break-word;
   }
 }
 
