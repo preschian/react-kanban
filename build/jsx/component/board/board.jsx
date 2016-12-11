@@ -28,7 +28,7 @@ class BoardColumn extends React.Component {
   @observable dataTask = this.props.dataTask
 
   render = () => (
-    <div className="board-column">
+    <div className="board-column" id={this.dataId}>
       <div className="board-content">
         <BoardHeader>{this.props.children}</BoardHeader>
         {map(this.dataTask, (value) => <BoardCard key={value.id}>{value.text}</BoardCard>)}
@@ -57,10 +57,14 @@ class BoardColumn extends React.Component {
 @observer
 class GenerateBoardColumn extends React.Component {
   render = () => (
-    <div className="board-wrap">
+    <div className="board-wrap" ref={this.dragulaDecorator}>
       {boardStores.column.map((value) => <BoardColumn key={value.id} dataId={value.id} dataTask={value.task}>{value.text}</BoardColumn>)}
     </div>
   )
+
+  dragulaDecorator = (component) => {
+    boardStores.dragColumn(component)
+  }
 }
 
 // add new column

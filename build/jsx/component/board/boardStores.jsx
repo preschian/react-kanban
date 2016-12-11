@@ -1,4 +1,5 @@
 import { observable } from 'mobx'
+import Dragula from 'react-dragula'
 
 import database from '../../config/firebase'
 
@@ -15,7 +16,6 @@ class Board {
       this.column = []
 
       snapshot.forEach((value) => {
-        console.log(value.val())
         this.column.push(value.val())
         this.latestOrder = value.val().order + 1
       })
@@ -32,6 +32,14 @@ class Board {
     })
   }
 
+  updateColumnOrder(id, order) {
+    database.ref('column').orderByChild('id').equalTo(id).once('value').then((snapshot) => {
+      snapshot.forEach((value) => {
+        value.ref.update({ order })
+      })
+    })
+  }
+
   newTask(text, id) {
     database.ref('column').orderByChild('id').equalTo(id).once('value').then((snapshot) => {
       snapshot.forEach((value) => {
@@ -45,6 +53,20 @@ class Board {
 
   generateID() {
     return Math.random().toString(36).substr(2, 32)
+  }
+
+  dragColumn(component) {
+    const updateOrder = this.updateColumnOrder
+
+    Dragula([component], {
+      direction: 'horizontal',
+      ignoreInputTextSelection: false
+    }).on('drop', function(el, target) {
+      const getId = Array.from(target.childNodes)
+      getId.map((value, index) => {
+        updateOrder(value.id, index + 1)
+      })
+    })
   }
 }
 
