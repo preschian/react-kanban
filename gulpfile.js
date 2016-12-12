@@ -102,6 +102,7 @@ gulp.task('watch', function() {
 // serve
 gulp.task('browser', function() {
   serve.init({
+    open: false,
     server: {
       baseDir: DIST,
       middleware: [

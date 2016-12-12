@@ -1,10 +1,10 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
-import { map } from 'lodash'
 
 import boardStores from './boardStores'
 
+@observer
 class BoardHeader extends React.Component {
   render = () => (
     <div className="board-header">
@@ -13,6 +13,7 @@ class BoardHeader extends React.Component {
   )
 }
 
+@observer
 class BoardCard extends React.Component {
   render = () => (
     <div className="board-card">
@@ -23,33 +24,57 @@ class BoardCard extends React.Component {
 
 @observer
 class BoardColumn extends React.Component {
-  @observable inputValue = ''
   @observable dataId = this.props.dataId
-  @observable dataTask = this.props.dataTask
+  @observable task = []
+  @observable taskOrder = 1
+  @observable taskValue = ''
+
+  constructor(props) {
+    super(props)
+    
+    this.getTask(this.props.dataId)
+  }
 
   render = () => (
     <div className="board-column" id={this.dataId}>
       <div className="board-content">
         <BoardHeader>{this.props.children}</BoardHeader>
-        {map(this.dataTask, (value) => <BoardCard key={value.id}>{value.text}</BoardCard>)}
+        <div className="board-card-wrap" ref={this.dragulaTaskDecorator}>
+          {this.task.map((value) => <BoardCard key={value.id}>{value.text}</BoardCard>)}
+        </div>
 
         <div className="board-content-input">
-          <input className="board-content-task" type="text" placeholder="Add a task..." value={this.inputValue} onChange={this.changeValue} onKeyPress={this.addValue} />
+          <input className="board-content-task" type="text" placeholder="Add a task..." value={this.taskValue} onChange={this.changeTaskValue} onKeyPress={this.addNewTask} />
         </div>
       </div>
     </div>
   )
 
-  changeValue = (event) => {
-    this.inputValue = event.target.value
+  changeTaskValue = (event) => {
+    this.taskValue = event.target.value
   }
 
-  addValue = (event) => {
+  addNewTask = (event) => {
     if (event.key === 'Enter') {
-      boardStores.newTask(event.target.value, this.dataId)
+      boardStores.newTask(event.target.value, this.dataId, this.taskOrder)
       document.activeElement.blur()
-      this.inputValue = ''
+      this.taskValue = ''
     }
+  }
+
+  getTask(id) {
+    boardStores.getTask(id).on('value', (snapshot) => {
+      this.task = []
+
+      snapshot.forEach((value) => {
+        this.task.push(value.val())
+        this.taskOrder = value.val().order + 1
+      })
+    })
+  }
+
+  dragulaTaskDecorator = (component) => {
+    boardStores.dragTask(component)
   }
 }
 
@@ -58,7 +83,7 @@ class BoardColumn extends React.Component {
 class GenerateBoardColumn extends React.Component {
   render = () => (
     <div className="board-wrap" ref={this.dragulaDecorator}>
-      {boardStores.column.map((value) => <BoardColumn key={value.id} dataId={value.id} dataTask={value.task}>{value.text}</BoardColumn>)}
+      {boardStores.column.map((value) => <BoardColumn key={value.id} dataId={value.id}>{value.text}</BoardColumn>)}
     </div>
   )
 
@@ -70,29 +95,30 @@ class GenerateBoardColumn extends React.Component {
 // add new column
 @observer
 class AddBoardColumn extends React.Component {
-  @observable inputValue = ''
+  @observable columnValue = ''
 
   render = () => (
     <div className="board-add">
       <div className="board-add">
-        <input className="board-add-input" type="text" placeholder="Add a list..." onKeyPress={this.addValue} onChange={this.changeValue} value={this.inputValue} />
+        <input className="board-add-input" type="text" placeholder="Add a list..." value={this.columnValue} onChange={this.changeColumnValue} onKeyPress={this.addNewColumn} />
       </div>
     </div>
   )
 
-  changeValue = (event) => {
-    this.inputValue = event.target.value
+  changeColumnValue = (event) => {
+    this.columnValue = event.target.value
   }
 
-  addValue = (event) => {
+  addNewColumn = (event) => {
     if (event.key === 'Enter') {
       boardStores.newColumn(event.target.value)
       document.activeElement.blur()
-      this.inputValue = ''
+      this.columnValue = ''
     }
   }
 }
 
+@observer
 export default class Board extends React.Component {
   render = () => (
     <div className="board">

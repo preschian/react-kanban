@@ -6,6 +6,7 @@ import database from '../../config/firebase'
 class Board {
   constructor() {
     this.getColumn()
+    this.drakeTask = Dragula({})
   }
 
   @observable column = []
@@ -40,15 +41,16 @@ class Board {
     })
   }
 
-  newTask(text, id) {
-    database.ref('column').orderByChild('id').equalTo(id).once('value').then((snapshot) => {
-      snapshot.forEach((value) => {
-        value.ref.child('task').push().set({
-          id: this.generateID(),
-          text: text
-        })
-      })
+  newTask(text, id, order) {
+    database.ref(`task/${id}`).push().set({
+      id: this.generateID(),
+      order: order,
+      text: text
     })
+  }
+
+  getTask(id) {
+    return database.ref(`task/${id}`)
   }
 
   generateID() {
@@ -60,13 +62,21 @@ class Board {
 
     Dragula([component], {
       direction: 'horizontal',
-      ignoreInputTextSelection: false
+      ignoreInputTextSelection: false,
+      moves(el, container, handle) {
+        return handle.classList.contains('board-header')
+      }
     }).on('drop', function(el, target) {
       const getId = Array.from(target.childNodes)
+
       getId.map((value, index) => {
         updateOrder(value.id, index + 1)
       })
     })
+  }
+
+  dragTask(component) {
+    this.drakeTask.containers.push(component)
   }
 }
 

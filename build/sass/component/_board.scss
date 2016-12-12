@@ -30,7 +30,7 @@
   padding-bottom: 16px;
 
   .board-content-input {
-    padding-top: 16px;
+    margin-top: -16px;
     padding-right: 16px;
     padding-left: 16px;
   }
@@ -62,18 +62,18 @@
   }
 }
 
+.board-card-wrap {
+  padding: 16px;
+}
+
 .board-card {
   @include box-shadow-light;
   @include transition-duration(0.2s);
   background-color: white;
   border-radius: 2px;
   cursor: pointer;
-  margin: 16px 16px 0 16px;
+  margin-bottom: 16px;
   padding: 8px 16px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 
   &:hover {
     @include box-shadow;
